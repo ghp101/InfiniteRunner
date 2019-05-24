@@ -12,21 +12,41 @@ import java.awt.Graphics;
  *
  * @author pengg8152
  */
-public class Obstacle extends Block
+public class Obstacle extends Block implements Collidable
 {
     private int speed;
     
     public Obstacle()
     {
-        super(200,400,50,50,Color.green);
+        super(800,350,50,100,Color.black);
+        speed = 2;
     }
     
-    public void move(Graphics window, int s)
+    public void move(Graphics window)
     {
-        speed = s;
-        
         draw(window, Color.WHITE);
-        setY(getX() - speed);
+        setX(getX() - speed);
         draw(window); 
+    }
+
+    public boolean didCollideLeft(Block b)
+    {
+        return (b.getX()+b.getWidth() >= getX());
+    }
+
+    public boolean didCollideRight(Block b)
+    {
+
+        return (b.getX() <= getX()+getWidth());
+    }
+
+    public boolean didCollideTop(Block b)
+    {
+        return (b.getY()+b.getHeight() >= getY());
+    }
+    
+    public boolean didCollideBottom(Block b)
+    {
+        return (b.getY() <= getY()+getHeight());
     }
 }

@@ -18,7 +18,7 @@ public class Player extends Block
     
     public Player()
     {
-        super(50,400,50,50,Color.blue);
+        super(100,400,50,50,Color.blue);
         speed = 5;
     }
     
@@ -27,7 +27,7 @@ public class Player extends Block
         speed = s;
     }
     
-    public void jump(Graphics window)
+    public void move(Graphics window)
     {
         draw(window, Color.WHITE);
         setY(getY() - speed);

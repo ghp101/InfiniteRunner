@@ -25,8 +25,9 @@ public class InfiniteRunner extends Canvas implements KeyListener, Runnable
     private boolean[] keys;
     private BufferedImage back;
     private int score;
-    private Player player;
     private boolean jump;
+    private Player player;
+    private Obstacle obstacle;
 
     public InfiniteRunner()
     {
@@ -39,6 +40,7 @@ public class InfiniteRunner extends Canvas implements KeyListener, Runnable
         addKeyListener(this);
         
         player = new Player();
+        obstacle = new Obstacle();
     }
 
     public void update(Graphics window)
@@ -57,16 +59,30 @@ public class InfiniteRunner extends Canvas implements KeyListener, Runnable
 
         Graphics graphToBack = back.createGraphics();
         
+        graphToBack.setColor(Color.black);
+        graphToBack.fillRect(0, 450, 800, 200);
+        
+        player.draw(graphToBack);
         if(jump == true)
         {
-            player.jump(graphToBack);
-            if(player.getY() == 150)
+            player.move(graphToBack);
+            if(player.getY() == 100)
                 player.setSpeed(-5);
             if(player.getY() == 400)
             {
                 jump = false;
                 player.setSpeed(5);
             }
+        }
+        
+        obstacle.move(graphToBack);
+        if(obstacle.getX()+obstacle.getWidth() == 0)
+        {
+            obstacle.draw(graphToBack,Color.white);
+            obstacle.setHeight((int) (Math.random()*50) + 50);
+            obstacle.setX(800);
+            obstacle.setY(400-(obstacle.getHeight()-50));
+            obstacle.move(graphToBack);
         }
         
         if (keys[0] == true)
@@ -88,7 +104,7 @@ public class InfiniteRunner extends Canvas implements KeyListener, Runnable
     {
         switch (toUpperCase(e.getKeyChar()))
         {
-            case 'W':
+            case KeyEvent.VK_SPACE:
                 keys[0] = true;
                 break;
             case 'S':
@@ -104,7 +120,7 @@ public class InfiniteRunner extends Canvas implements KeyListener, Runnable
     {
         switch (toUpperCase(e.getKeyChar()))
         {
-            case 'W':
+            case KeyEvent.VK_SPACE:
                 keys[0] = false;
                 break;
             case 'S':
