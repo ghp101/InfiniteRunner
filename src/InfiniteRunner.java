@@ -68,16 +68,16 @@ public class InfiniteRunner extends Canvas implements KeyListener, Runnable
 
         Graphics graphToBack = back.createGraphics();
         
+//        // ground
         graphToBack.setColor(Color.black);
         graphToBack.fillRect(0, 450, 800, 200);
         
+        // score
         graphToBack.setColor(Color.white);
-        graphToBack.fillRect(350, 0, 100, 80);
-
+        graphToBack.fillRect(350, 0, 200, 80);
         graphToBack.setColor(Color.black);
-
-
         graphToBack.drawString("Score: " + score, 400, 50);
+        graphToBack.drawString("High Score: " + score, 450, 50);
         
         // jump
         player.draw(graphToBack);
