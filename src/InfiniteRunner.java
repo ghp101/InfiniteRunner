@@ -19,15 +19,22 @@ import java.awt.event.KeyEvent;
 import static java.lang.Character.*;
 import java.awt.image.BufferedImage;
 import java.awt.event.ActionListener;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 public class InfiniteRunner extends Canvas implements KeyListener, Runnable
 {
     private boolean[] keys;
     private BufferedImage back;
     private int score;
+    private int level;
     private boolean jump;
     private Player player;
     private Obstacle obstacle;
+    private Score highScore;
 
     public InfiniteRunner()
     {
@@ -41,6 +48,8 @@ public class InfiniteRunner extends Canvas implements KeyListener, Runnable
         
         player = new Player();
         obstacle = new Obstacle();
+        
+        highScore = new Score();
     }
 
     public void update(Graphics window)
@@ -62,6 +71,15 @@ public class InfiniteRunner extends Canvas implements KeyListener, Runnable
         graphToBack.setColor(Color.black);
         graphToBack.fillRect(0, 450, 800, 200);
         
+        graphToBack.setColor(Color.white);
+        graphToBack.fillRect(350, 0, 100, 80);
+
+        graphToBack.setColor(Color.black);
+
+
+        graphToBack.drawString("Score: " + score, 400, 50);
+        
+        // jump
         player.draw(graphToBack);
         if(jump == true)
         {
@@ -75,15 +93,39 @@ public class InfiniteRunner extends Canvas implements KeyListener, Runnable
             }
         }
         
+        // re draw obstacle
         obstacle.move(graphToBack);
-        if(obstacle.getX()+obstacle.getWidth() == 0)
+        if(obstacle.getX()+obstacle.getWidth() <= 0)
         {
             obstacle.draw(graphToBack,Color.white);
             obstacle.setHeight((int) (Math.random()*50) + 50);
             obstacle.setX(800);
             obstacle.setY(400-(obstacle.getHeight()-50));
             obstacle.move(graphToBack);
+            
+            score++;
         }
+        
+        // collision
+        if(obstacle.didCollideBottom(player) == true
+        && obstacle.didCollideTop(player) == true
+        && obstacle.didCollideLeft(player) == true
+        && obstacle.didCollideRight(player) == true)
+        {
+            obstacle.setSpeed(0);
+            player.setSpeed(0);
+            try {
+                highScore.save(score);
+            } catch (IOException ex) {
+                Logger.getLogger(InfiniteRunner.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        
+        // level
+        if(score == 5)
+            obstacle.setSpeed(4);
+        if(score == 10)
+            obstacle.setSpeed(6);
         
         if (keys[0] == true)
         {

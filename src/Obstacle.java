@@ -22,6 +22,11 @@ public class Obstacle extends Block implements Collidable
         speed = 2;
     }
     
+    public void setSpeed(int s)
+    {
+        speed = s;
+    }
+    
     public void move(Graphics window)
     {
         draw(window, Color.WHITE);
