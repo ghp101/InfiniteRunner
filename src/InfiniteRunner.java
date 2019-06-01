@@ -38,7 +38,7 @@ public class InfiniteRunner extends Canvas implements KeyListener, Runnable
 
     public InfiniteRunner()
     {
-        keys = new boolean[3];
+        keys = new boolean[2];
 
         setBackground(Color.WHITE);
         setVisible(true);
@@ -77,7 +77,7 @@ public class InfiniteRunner extends Canvas implements KeyListener, Runnable
         graphToBack.fillRect(350, 0, 200, 80);
         graphToBack.setColor(Color.black);
         graphToBack.drawString("Score: " + score, 400, 50);
-        graphToBack.drawString("High Score: " + highScore.get(), 450, 50);
+        graphToBack.drawString("High Score: " + highScore.get(), 470, 50);
         
         // jump
         player.draw(graphToBack);
@@ -133,11 +133,18 @@ public class InfiniteRunner extends Canvas implements KeyListener, Runnable
         }
         if (keys[1] == true)
         {
-
-        }
-        if (keys[2] == true)
-        {
-
+            obstacle.draw(graphToBack,Color.white);
+            obstacle.setHeight((int) (Math.random()*50) + 50);
+            obstacle.setX(800);
+            obstacle.setY(400-(obstacle.getHeight()-50));
+            obstacle.move(graphToBack);
+            obstacle.setSpeed(2);
+            
+            player.draw(graphToBack, Color.white);
+            player.setY(400);
+            player.draw(graphToBack);
+            
+            score = 0;
         }
         twoDGraph.drawImage(back, null, 0, 0);
     }
@@ -149,11 +156,8 @@ public class InfiniteRunner extends Canvas implements KeyListener, Runnable
             case KeyEvent.VK_SPACE:
                 keys[0] = true;
                 break;
-            case 'S':
-                keys[1] = true;
-                break;
             case 'R':
-                keys[2] = true;
+                keys[1] = true;
                 break;
         }
     }
@@ -165,11 +169,8 @@ public class InfiniteRunner extends Canvas implements KeyListener, Runnable
             case KeyEvent.VK_SPACE:
                 keys[0] = false;
                 break;
-            case 'S':
-                keys[1] = false;
-                break;
             case 'R':
-                keys[2] = false;
+                keys[1] = false;
                 break;
         }
     }
