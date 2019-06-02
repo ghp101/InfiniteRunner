@@ -34,7 +34,7 @@ public class InfiniteRunner extends Canvas implements KeyListener, Runnable
     private boolean jump;
     private Player player;
     private Obstacle obstacle;
-    private Score highScore;
+    private HighScore highScore;
 
     public InfiniteRunner()
     {
@@ -49,7 +49,7 @@ public class InfiniteRunner extends Canvas implements KeyListener, Runnable
         player = new Player();
         obstacle = new Obstacle();
         
-        highScore = new Score();
+        highScore = new HighScore();
     }
 
     public void update(Graphics window)
@@ -84,7 +84,7 @@ public class InfiniteRunner extends Canvas implements KeyListener, Runnable
         if(jump == true)
         {
             player.move(graphToBack);
-            if(player.getY() == 100)
+            if(player.getY() == 150)
                 player.setSpeed(-5);
             if(player.getY() == 400)
             {
@@ -123,8 +123,12 @@ public class InfiniteRunner extends Canvas implements KeyListener, Runnable
         
         // level
         if(score == 5)
-            obstacle.setSpeed(4);
+            obstacle.setSpeed(3);
         if(score == 10)
+            obstacle.setSpeed(4);
+        if(score == 20)
+            obstacle.setSpeed(5);
+        if(score == 40)
             obstacle.setSpeed(6);
         
         if (keys[0] == true)

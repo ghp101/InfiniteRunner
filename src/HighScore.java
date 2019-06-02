@@ -19,16 +19,16 @@ import java.util.logging.Logger;
  *
  * @author pengg8152
  */
-public class Score
+public class HighScore
 {
     private static int highScore;
     
-    public Score()
+    public HighScore()
     {
         try {
             read();
         } catch (IOException ex) {
-            Logger.getLogger(Score.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(HighScore.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     

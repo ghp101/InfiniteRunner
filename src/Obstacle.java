@@ -15,11 +15,15 @@ import java.awt.Graphics;
 public class Obstacle extends Block implements Collidable
 {
     private int speed;
+    private static int multi;
     
     public Obstacle()
     {
         super(800,350,50,100,Color.black);
         speed = 2;
+        
+        if(multi == 0)
+            setMulti(1);
     }
     
     public void setSpeed(int s)
@@ -27,10 +31,15 @@ public class Obstacle extends Block implements Collidable
         speed = s;
     }
     
+    public static void setMulti(int m)
+    {
+        multi = m;
+    }
+    
     public void move(Graphics window)
     {
         draw(window, Color.WHITE);
-        setX(getX() - speed);
+        setX(getX() - speed*multi);
         draw(window); 
     }
 
